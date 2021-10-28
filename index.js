@@ -53,7 +53,7 @@ client.on('messageCreate', async (message) => {
     console.log("Found a message!");
     for (i = 0; i < message.content.length; i++)
     {
-        if (message.content.startsWith('ez', i))
+        if (message.content.startsWith('ez', i) || message.content.startsWith('EZ', i) || message.content.startsWith('Ez', i))
         {
             //client.user.setAvatar(message.author.avatar);
             //message.channel.send("test");
