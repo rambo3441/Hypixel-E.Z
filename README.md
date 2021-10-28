@@ -8,5 +8,5 @@ A Basic Discord Bot written in Discord.js to replace all new messages with ez in
 4.  Edit the config.json with your token.
 5.  Run: 
   ``` 
-  node index.js
+  npm install && node index.js
   ```
