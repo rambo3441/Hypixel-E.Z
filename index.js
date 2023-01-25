@@ -4,6 +4,8 @@ const { token } = require('./config.json');
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
+// Stores all the EZ replacements
 const replacements = [
     "Doin a bamboozle fren.",
     "I need help, teach me how to play!",
@@ -55,30 +57,31 @@ client.on('messageCreate', async (message) => {
     {
         if (message.content.startsWith('ez', i) || message.content.startsWith('EZ', i) || message.content.startsWith('Ez', i))
         {
-            //client.user.setAvatar(message.author.avatar);
-            //message.channel.send("test");
-            //client.user.setAvatar(client.user.defaultAvatarURL);
-            let webhook = await message.channel.fetchWebhooks();
-            webhook = webhook.find(x => x.name === "Hypixel E.Z Bot");
+	   // Pulls all webhooks 
+           let webhook = await message.channel.fetchWebhooks();
+           webhook = webhook.find(x => x.name === "Hypixel E.Z Bot");
 
-            if(!webhook) {
+           // Creates the initial webhook 
+	   if(!webhook) {
                 webhook = await message.channel.createWebhook(`Hypixel E.Z Bot`, {
                     avatar: client.user.displayAvatarURL({dynamic: true})
                 });
             }
 
+	    // Edits the character before sending it
             await webhook.edit({
                 name: message.member.nickname ? message.member.nickname : message.author.username,
                 avatar: message.author.displayAvatarURL({dynamic: true})
             })
 
+	    // Deletes the original message with ezz in it. 
             message.delete().catch(m => {})
 
-            //webhook.send("Testing").catch( m => {});
-
+	    // Picks a random EZ message to send and sends it	
             webhook.send(replacements[Math.floor(Math.random() * replacements.length) + 1]).catch( m => {});
 
-            await webhook.edit({
+            // Edits webhook back to original bot user
+	    await webhook.edit({
                 name: `Hypixel E.Z Bot`,
                 avatar: client.user.displayAvatarURL({dynamic:true})
             })
